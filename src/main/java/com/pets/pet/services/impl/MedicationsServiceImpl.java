@@ -26,7 +26,7 @@ public class MedicationsServiceImpl implements IMedicationsService {
         medication.setFrequencyHours(request.getFrequencyHours());
         medication.setStartDate(request.getStartDate());
         medication.setEndDate(request.getEndDate());
-        medication.setIsActive(true); // Por defecto activo
+        medication.setIsActive(true);
 
         Medications savedMedication = medicationsRepository.save(medication);
 

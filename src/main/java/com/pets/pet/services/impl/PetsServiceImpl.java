@@ -42,6 +42,7 @@ public class PetsServiceImpl implements IPetsService {
         pet.setBirthDate(request.getBirthDate());
         pet.setIdUser(user);
 
+
         // Asignar medicamento si se proporciona
         if (request.getMedicationId() != null) {
             Medications medication = medicationsRepository.findById(request.getMedicationId())
