@@ -2,6 +2,7 @@ package com.pets.pet.web.controllers;
 
 import com.pets.pet.services.IPetsService;
 import com.pets.pet.web.dtos.request.PetCreateRequest;
+import com.pets.pet.web.dtos.request.PetUpdateRequest;
 import com.pets.pet.web.dtos.response.BaseResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,13 @@ public class PetsController {
         return baseResponse.buildResponseEntity();
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<BaseResponse> updatePet(
+            @PathVariable Long id,
+            @Valid @RequestBody PetUpdateRequest request) {
+        BaseResponse baseResponse = petsService.updatePet(id, request);
+        return baseResponse.buildResponseEntity();
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponse> deletePet(@PathVariable Long id) {

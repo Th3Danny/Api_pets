@@ -4,6 +4,7 @@ import com.pets.pet.persistance.entities.*;
 import com.pets.pet.persistance.repositories.*;
 import com.pets.pet.services.IPetsService;
 import com.pets.pet.web.dtos.request.PetCreateRequest;
+import com.pets.pet.web.dtos.request.PetUpdateRequest;
 import com.pets.pet.web.dtos.response.BaseResponse;
 import com.pets.pet.web.exeptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,7 @@ public class PetsServiceImpl implements IPetsService {
         // Crear nueva mascota
         Pets pet = new Pets();
         pet.setName(request.getName());
+        pet.setAge(request.getAge());
         pet.setSpecies(request.getSpecies());
         pet.setBreed(request.getBreed());
         pet.setBirthDate(request.getBirthDate());
@@ -126,6 +128,50 @@ public class PetsServiceImpl implements IPetsService {
                 .httpStatus(HttpStatus.OK)
                 .build();
     }
+
+    @Override
+    public BaseResponse updatePet(Long id, PetUpdateRequest request) {
+        Pets pet = petsRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(("Pet not found with id: " + id).getClass()));
+
+        // Actualizar datos básicos
+        pet.setName(request.getName());
+        pet.setSpecies(request.getSpecies());
+        pet.setAge(request.getAge());
+        pet.setBreed(request.getBreed());
+        pet.setBirthDate(request.getBirthDate());
+
+        // Actualizar medicamento si se proporciona
+        if (request.getMedicationId() != null) {
+            Medications medication = medicationsRepository.findById(request.getMedicationId())
+                    .orElseThrow(() -> new ResourceNotFoundException(("Medication not found with id: " + request.getMedicationId()).getClass()));
+            pet.setPetMedication(medication);
+        }
+
+        // Actualizar dieta si se proporciona
+        if (request.getDietId() != null) {
+            Diet diet = dietRepository.findById(request.getDietId())
+                    .orElseThrow(() -> new ResourceNotFoundException(("Diet not found with id: " + request.getDietId()).getClass()));
+            pet.setPetDiet(diet);
+        }
+
+        // Actualizar vacuna si se proporciona
+        if (request.getVaccineId() != null) {
+            Vaccines vaccine = vaccinesRepository.findById(request.getVaccineId())
+                    .orElseThrow(() -> new ResourceNotFoundException(("Vaccine not found with id: " + request.getVaccineId()).getClass()));
+            pet.setPetVaccines(vaccine);
+        }
+
+        Pets updatedPet = petsRepository.save(pet);
+
+        return BaseResponse.builder()
+                .data(updatedPet)
+                .message("Pet updated successfully")
+                .success(true)
+                .httpStatus(HttpStatus.OK)
+                .build();
+    }
+
 
     @Override
     public BaseResponse deletePet(Long id) {

@@ -21,6 +21,9 @@ public class Pets {
     @Column(name = "name",nullable = false,length = 40)
     private String name;
 
+    @Column(name = "age",nullable = false,length = 40)
+    private Long age;
+
     @Column(name = "species",nullable = false, length = 40)
     private String species;
 
@@ -59,6 +62,14 @@ public class Pets {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getAge() {
+        return age;
+    }
+
+    public void setAge(Long age) {
+        this.age = age;
     }
 
     public String getSpecies() {

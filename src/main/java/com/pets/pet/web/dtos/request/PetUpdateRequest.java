@@ -1,36 +1,40 @@
 package com.pets.pet.web.dtos.request;
 
 import jakarta.validation.constraints.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-public class PetCreateRequest {
-    @NotBlank(message = "El nombre es obligatorio")
-    @Size(max = 40, message = "El nombre no puede exceder 40 caracteres")
+@Data
+public class PetUpdateRequest {
+    @NotBlank(message = "Name is required")
+    @Size(max = 40, message = "Name must not exceed 40 characters")
     private String name;
 
     @Min(0)
     @Max(50)
     private Long age;
 
-
-    @NotBlank(message = "La especie es obligatoria")
-    @Size(max = 40, message = "La especie no puede exceder 40 caracteres")
+    @NotBlank(message = "Species is required")
+    @Size(max = 40, message = "Species must not exceed 40 characters")
     private String species;
 
-    @NotBlank(message = "La raza es obligatoria")
-    @Size(max = 40, message = "La raza no puede exceder 40 caracteres")
+    @NotBlank(message = "Breed is required")
+    @Size(max = 40, message = "Breed must not exceed 40 characters")
     private String breed;
 
-    @NotNull(message = "La fecha de nacimiento es obligatoria")
+    @NotNull(message = "Birth date is required")
     private LocalDateTime birthDate;
 
-    @NotNull(message = "El ID del usuario es obligatorio")
-    private Long userId;
-
-    // Campos opcionales para medicamentos, dietas y vacunas
     private Long medicationId;
     private Long dietId;
+    private Long vaccineId;
+
+    public PetUpdateRequest() {}
+
+    public String getName() {
+        return name;
+    }
 
     public Long getAge() {
         return age;
@@ -38,15 +42,6 @@ public class PetCreateRequest {
 
     public void setAge(Long age) {
         this.age = age;
-    }
-
-    private Long vaccineId;
-
-    public PetCreateRequest() {}
-
-    // Getters y setters existentes
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {
@@ -77,15 +72,6 @@ public class PetCreateRequest {
         this.birthDate = birthDate;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    // Nuevos getters y setters para los campos opcionales
     public Long getMedicationId() {
         return medicationId;
     }

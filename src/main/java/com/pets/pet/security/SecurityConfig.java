@@ -26,6 +26,14 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "auth/authenticate").permitAll()
                         .requestMatchers(HttpMethod.POST, "auth/refresh-token").permitAll()
                         .requestMatchers(HttpMethod.GET, "users").permitAll()
+                        .requestMatchers(HttpMethod.GET, "pets").permitAll()
+                        .requestMatchers(HttpMethod.POST, "pets").permitAll()
+                        .requestMatchers(HttpMethod.GET, "pets/{id}").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "pets/{id}").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "pets/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "diets").permitAll()
+                        .requestMatchers(HttpMethod.GET, "medications").permitAll()
+                        .requestMatchers(HttpMethod.GET, "vaccines").permitAll()
 
                 );
 

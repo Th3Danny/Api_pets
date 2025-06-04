@@ -49,11 +49,13 @@ public class AuthServiceImpl implements IAuthService {
         // Generar tokens
         String accessToken = jwtUtils.generateToken(user.getEmail(), claims, JWTType.ACCESS_TOKEN);
         String refreshToken = jwtUtils.generateToken(user.getEmail(), null, JWTType.REFRESH_TOKEN);
+        Long idUser = user.getId();
 
         // Armar respuesta
-        Map<String, Object> tokens = Map.of(
-                "access_token", accessToken,
-                "refresh_token", refreshToken
+        Map<String, Object> tokens = Map.ofEntries(
+                Map.entry("access_token", accessToken),
+                Map.entry("refresh_token", refreshToken),
+                Map.entry("id_user",idUser)
         );
 
         return BaseResponse.builder()
